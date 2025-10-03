@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
- 
+import mongoose, { Schema } from "mongoose";
+
 const bookingSchema = new Schema(
   {
     user: {
@@ -27,68 +27,46 @@ const bookingSchema = new Schema(
       },
     ],
     boardingPoint: {
-      location: {
-        type: String,
-        required: true,
-      },
-      time: {
-        type: Date,
-        required: true,
-      },
-      landmark: {
-        type: String,
-      },
+      location: { type: String, required: true },
+      time: { type: Date, required: true },
+      landmark: { type: String },
     },
     droppingPoint: {
-      location: {
-        type: String,
-        required: true,
-      },
-      time: {
-        type: Date,
-      },
-      landmark: {
-        type: String,
-      },
+      location: { type: String, required: true },
+      time: { type: Date },
+      landmark: { type: String },
     },
     status: {
       type: String,
       enum: ["initiated", "confirmed", "cancelled", "failed"],
       default: "initiated",
     },
-    bookedAt: {
-      type: Date,
-      default: Date.now,
-    },
-    ticketURL: {
-      type: String, // PDF/e-ticket link
-    },
+    bookedAt: { type: Date, default: Date.now },
+    ticketURL: { type: String }, // PDF/e-ticket link
     totalFare: {
-      finalFare: {
-        type: Number,
-        default: 0,
-      },
-      discount: {
-        type: Number,
-        default: 0,
-      },
+      finalFare: { type: Number, default: 0 },
+      discount: { type: Number, default: 0 },
     },
     paymentStatus: {
       type: String,
       enum: ["pending", "paid", "failed"],
       default: "pending",
     },
-    latestPayment: { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: "Payment" 
-    },
-    cancellation: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Cancellation", // references separate cancellation collection
-    },
+    latestPayment: { type: mongoose.Schema.Types.ObjectId, ref: "Payment" },
+    cancellation: { type: mongoose.Schema.Types.ObjectId, ref: "Cancellation" },
   },
   { timestamps: true }
 );
+
+// In Booking model
+bookingSchema.virtual("passengers", {
+  ref: "Passengers", // name of the Passenger model
+  localField: "_id",
+  foreignField: "booking",
+});
+bookingSchema.set("toObject", { virtuals: true });
+bookingSchema.set("toJSON", { virtuals: true });
+
 
 bookingSchema.index({ user: 1, trip: 1, providerBookingId: 1 });
 
