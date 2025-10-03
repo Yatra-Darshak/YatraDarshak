@@ -10,7 +10,7 @@ const ConnectToMongoDB = async () => {
     if (!process.env.MONGO_URL) {
       throw new Error("MONGO_URL is not defined in environment variables");
     }
-    const connected = await mongoose.connect("mongodb://localhost:27017/YatraDarshak");
+    const connected = await mongoose.connect(process.env.MONGO_URL || "mongodb://localhost:27017/YatraDarshak");
 
     console.log(`\nMongoDb connected ! DB host: ${connected.connection.host}`);
 
