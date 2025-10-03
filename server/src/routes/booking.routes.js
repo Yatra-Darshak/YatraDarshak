@@ -1,11 +1,11 @@
 import express from "express";
 import {
   createBooking,
-  getBookings,
+  getBooking,
   getBookingByID,
   cancelBooking,
-} from "../controllers/booking.controllers";
-import isAuthenticated from "../middlewares/isAuthenticated";
+} from "../controllers/booking.controllers.js";
+import isAuthenticated from "../middlewares/isAuthenticated.js";
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.use(isAuthenticated);
 
 router.route("/bookings")
     .post(createBooking)
-    .get(getBookings);
+    .get(getBooking);
 router.get("/bookings/:id", getBookingByID);
 router.patch("/bookings/:id/cancel", cancelBooking);
 
