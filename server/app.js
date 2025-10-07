@@ -25,10 +25,12 @@ app.use((req, res, next) => {
 // routes import
 import authRoutes from './src/routes/authUser.routes.js';
 import busBooking from './src/routes/booking.routes.js';
+import busTrips from './src/routes/Bus-Service/busTrip.routes.js';
 
 // routes usage
 app.use("/api/auth", authRoutes);
 app.use("/api", busBooking);
+app.use("/api", busTrips);
 
 // exporting
 export { app };
