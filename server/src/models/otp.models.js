@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 
 const otpSchema = new mongoose.Schema({
-  phonenumber: {
+  phoneNumber: {
     type: String,
     required: true,
   },
