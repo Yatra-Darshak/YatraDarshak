@@ -4,19 +4,17 @@ import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema(
   {
-    fullname: {
+    fullName: {
       type: String,
       required: true,
       trim: true,
-      default: "Anonymous User"
     },
 
     email: {
       type: String,
       trim: true,
       lowercase: true,
-      unique: true, 
-      sparse: true, 
+      unique: true,
       required: true,
     },
 
@@ -42,26 +40,31 @@ const userSchema = new Schema(
       enum: ["default", "phone", "google"],
       required: true,
     },
+
     posts: [
       {
         type: mongoose.Types.ObjectId,
         ref: "Post",
       },
     ],
+
     bookmarks: [
       {
         type: mongoose.Types.ObjectId,
         ref: "Post",
       },
     ],
-     profilePicture: {
+
+    profilePicture: {
       type: String,
       default: "",
     },
+
     bio: {
       type: String,
       default: "",
     },
+
     gender: {
       type: String,
       enum: ["male", "female"],
