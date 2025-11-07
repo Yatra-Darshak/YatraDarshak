@@ -1,49 +1,18 @@
 import React, { useState } from "react";
 import { LogIn, Sparkles, TrendingUp, Users, Shield, Phone } from "lucide-react";
 import Background from "../../Components/UI/Background";
-import YDlogo from "../../Components/UI/YDlogo";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-teal-900 to-slate-800 text-white overflow-hidden rounded-b-[80px]">
+    <div className="relative min-h- bg-gradient-to-br from-slate-900 via-teal-900 to-slate-800 text-white overflow-hidden rounded-b-[80px]">
       {/* Animated background */}
       <Background className='h-50%'/>
 
       <div className="relative z-10 flex flex-col items-center justify-center p-6 min-h-screen">
-        {/* Header */}
-        <div className="w-full flex justify-between items-center mb-12 max-w-6xl">
-          <div className="flex items-center gap-3">
-            <YDlogo size={60} />
-            <div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent">
-                YatraDarshak
-              </span>
-              <div className="text-sm text-gray-300">Partner's Platform</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            <span className="text-gray-300 hover:text-white cursor-pointer transition-colors duration-300">
-              Why YatraDarshak Partners?
-            </span>
-            <button
-              className="flex items-center gap-2 bg-white text-slate-800 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <LogIn
-                size={18}
-                className={`transition-transform duration-300 ${
-                  isHovered ? "rotate-12" : ""
-                }`}
-              />
-              Login
-            </button>
-          </div>
-        </div>
-
         {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-12 items-center w-full max-w-6xl">
           {/* Left Section */}
