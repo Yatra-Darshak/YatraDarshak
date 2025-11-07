@@ -7,6 +7,7 @@ import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
+import { OAuth2Client } from "google-auth-library";
 // import Post from "../models/post.models.js";
 
 /* -------------------- EMAIL LOGIN -------------------- */
@@ -82,7 +83,7 @@ export const emailLogin = async (req, res) => {
 /* -------------------- EMAIL SIGNUP -------------------- */
 export const emailSignup = async (req, res) => {
   try {
-    const { fullname, email, password, confirmPassword } = req.body;
+    const { fullName, email, password, confirmPassword } = req.body;
 
     if (!password || password !== confirmPassword) {
       return res.status(500).json({ success: false, message: "Passwords do not match" });
@@ -102,7 +103,7 @@ export const emailSignup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      fullname,
+      fullName,
       email,
       password: hashedPassword,
       loginMethod: "default",
@@ -173,7 +174,7 @@ export const sendOtp = async (req, res) => {
 /* -------------------- VERIFY OTP -------------------- */
 export const verifyOtp = async (req, res) => {
   try {
-    const { phonenumber, otp, fullname } = req.body;
+    const { phonenumber, otp, fullName } = req.body;
 
     const record = await OtpStore.findOne({ phonenumber }).sort({ createdAt: -1 });
 
@@ -196,7 +197,7 @@ export const verifyOtp = async (req, res) => {
     let user = await User.findOne({ phonenumber });
     if (!user) {
       user = new User({
-        fullname: fullname || "Anonymous User",
+        fullName: fullName || "Anonymous User",
         phonenumber,
         loginMethod: "phone",
       });
@@ -226,66 +227,23 @@ export const verifyOtp = async (req, res) => {
 };
 
 /* -------------------- GOOGLE LOGIN -------------------- */
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 export const googleLogin = async (req, res) => {
   try {
-    const { fullname, email, googleId } = req.body;
+    const { token } = req.body;
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
 
-    // find by googleId or by email and link, or create new
-    let user = await User.findOne({ googleId });
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
 
-    if (!user) {
-      user = await User.findOne({ email });
-
-      if (user) {
-        user.googleId = googleId;
-        user.loginMethod = "google";
-        await user.save();
-      } else {
-        user = new User({ fullname, email, googleId, loginMethod: "google" });
-        await user.save();
-      }
-    }
-
-    const populatedPosts = await Promise.all(
-      (user.posts || []).map(async (postId) => {
-        const post = await Post.findById(postId);
-        if (post && post.author && post.author.equals(user._id)) {
-          return post;
-        }
-        return null;
-      })
-    );
-
-    const postsFiltered = populatedPosts.filter(Boolean);
-
-    // prepare user object for response
-    const responseUser = {
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      profilePicture: user.profilePicture,
-      bio: user.bio,
-      posts: postsFiltered,
-    };
-
-    // Generate token
-    const token = jsonwebtoken.sign(
-      { id: user._id },
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: "7d" }
-    );
-
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        sameSite: "strict",
-        maxAge: 1 * 24 * 60 * 60 * 1000,
-      })
-      .status(200)
-      .json({ success: true, message: "Google login successful", token, user: responseUser });
-  } catch (error) {
-    console.error("Google login error:", error);
-    res.status(500).json({ success: false, message: "Server error", error: error.message });
+    // Continue login/signup logic...
+    res.status(200).json({ success: true, user: { email, name, picture } });
+  } catch (err) {
+    res.status(400).json({ message: "Invalid Google token" });
   }
 };
 
