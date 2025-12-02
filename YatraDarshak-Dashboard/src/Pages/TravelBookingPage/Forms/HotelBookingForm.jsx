@@ -1,6 +1,6 @@
-import { 
-  MapPin, 
-  Calendar, 
+import {
+  MapPin,
+  Calendar,
   Users,
   Star,
   X,
@@ -9,9 +9,10 @@ import {
   Clock,
   Shield,
   Phone,
-  CheckCircle
+  CheckCircle,
 } from "lucide-react";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const HotelBookingForm = () => {
   const destinations = [
@@ -38,14 +39,22 @@ const HotelBookingForm = () => {
     "Pondicherry",
   ];
 
-  const [location, setLocation] = useState({ city: 'Goa', area: '' });
-  const [checkInDate, setCheckInDate] = useState('2025-12-20');
-  const [checkOutDate, setCheckOutDate] = useState('2025-12-22');
+  const [location, setLocation] = useState({ city: "Goa", area: "" });
+  const [checkInDate, setCheckInDate] = useState("2025-12-20");
+  const [checkOutDate, setCheckOutDate] = useState("2025-12-22");
   const [guests, setGuests] = useState({ adults: 2, children: 0, rooms: 1 });
   const [showGuestModal, setShowGuestModal] = useState(false);
 
   const getDayOfWeek = (dateString) => {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
     const date = new Date(dateString);
     return days[date.getDay()];
   };
@@ -64,7 +73,6 @@ const HotelBookingForm = () => {
         {/* Search Form */}
         <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
           <div className="flex flex-wrap">
-            
             {/* Location Selector */}
             <div className="flex-1 min-w-[280px] p-6 border-r border-b border-gray-200 hover:bg-blue-50/30 transition-colors">
               <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
@@ -75,14 +83,20 @@ const HotelBookingForm = () => {
                 <div className="flex-1">
                   <select
                     value={location.city}
-                    onChange={(e) => setLocation({ ...location, city: e.target.value })}
+                    onChange={(e) =>
+                      setLocation({ ...location, city: e.target.value })
+                    }
                     className="w-full text-lg font-bold text-gray-800 border-none outline-none bg-transparent cursor-pointer"
                   >
                     {destinations.map((place, index) => (
-                      <option key={index} value={place}>{place}</option>
+                      <option key={index} value={place}>
+                        {place}
+                      </option>
                     ))}
                   </select>
-                  <div className="text-sm text-gray-500">{location.area || "Select your destination"}</div>
+                  <div className="text-sm text-gray-500">
+                    {location.area || "Select your destination"}
+                  </div>
                 </div>
               </div>
             </div>
@@ -101,7 +115,9 @@ const HotelBookingForm = () => {
                     onChange={(e) => setCheckInDate(e.target.value)}
                     className="w-full text-xl font-bold text-gray-800 border-none outline-none bg-transparent cursor-pointer"
                   />
-                  <div className="text-sm text-gray-500">{getDayOfWeek(checkInDate)}</div>
+                  <div className="text-sm text-gray-500">
+                    {getDayOfWeek(checkInDate)}
+                  </div>
                 </div>
               </div>
             </div>
@@ -121,13 +137,15 @@ const HotelBookingForm = () => {
                     min={checkInDate}
                     className="w-full text-xl font-bold text-gray-800 border-none outline-none bg-transparent cursor-pointer"
                   />
-                  <div className="text-sm text-gray-500">{getDayOfWeek(checkOutDate)}</div>
+                  <div className="text-sm text-gray-500">
+                    {getDayOfWeek(checkOutDate)}
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Guests & Rooms */}
-            <div 
+            <div
               className="flex-1 min-w-[240px] p-6 border-b border-gray-200 hover:bg-blue-50/30 transition-colors cursor-pointer"
               onClick={() => setShowGuestModal(true)}
             >
@@ -138,51 +156,70 @@ const HotelBookingForm = () => {
                 <Users className="w-6 h-6 text-blue-500" />
                 <div className="flex-1">
                   <div className="text-xl font-bold text-gray-800">
-                    {guests.adults + guests.children} Guest{guests.adults + guests.children > 1 ? 's' : ''}
+                    {guests.adults + guests.children} Guest
+                    {guests.adults + guests.children > 1 ? "s" : ""}
                   </div>
-                  <div className="text-sm text-gray-500">{guests.rooms} Room{guests.rooms > 1 ? 's' : ''}</div>
+                  <div className="text-sm text-gray-500">
+                    {guests.rooms} Room{guests.rooms > 1 ? "s" : ""}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <button className="w-full py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-lg font-bold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300">
-            SEARCH HOTELS
-          </button>
+          <Link to="/hotel-booking-page">
+            <button className="w-full py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-lg font-bold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300">
+              SEARCH HOTELS
+            </button>
+          </Link>
         </div>
       </div>
 
       {/* Why Book With Us */}
-       <div className="max-w-7xl mx-auto mt-12 mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Why Book With Us?</h2>
+      <div className="max-w-7xl mx-auto mt-12 mb-8">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+          Why Book With Us?
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-white rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Shield className="w-8 h-8 text-blue-600" />
             </div>
             <h3 className="font-bold text-gray-800 mb-2">Secure Payment</h3>
-            <p className="text-sm text-gray-600">100% secure payment with trusted gateways</p>
+            <p className="text-sm text-gray-600">
+              100% secure payment with trusted gateways
+            </p>
           </div>
           <div className="bg-white rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Star className="w-8 h-8 text-blue-600" />
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">Best Price Guarantee</h3>
-            <p className="text-sm text-gray-600">Lowest prices or we refund the difference</p>
+            <h3 className="font-bold text-gray-800 mb-2">
+              Best Price Guarantee
+            </h3>
+            <p className="text-sm text-gray-600">
+              Lowest prices or we refund the difference
+            </p>
           </div>
           <div className="bg-white rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Phone className="w-8 h-8 text-blue-600" />
             </div>
             <h3 className="font-bold text-gray-800 mb-2">24/7 Support</h3>
-            <p className="text-sm text-gray-600">Customer support available anytime, anywhere</p>
+            <p className="text-sm text-gray-600">
+              Customer support available anytime, anywhere
+            </p>
           </div>
           <div className="bg-white rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-8 h-8 text-blue-600" />
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">Instant Confirmation</h3>
-            <p className="text-sm text-gray-600">Get booking confirmation immediately</p>
+            <h3 className="font-bold text-gray-800 mb-2">
+              Instant Confirmation
+            </h3>
+            <p className="text-sm text-gray-600">
+              Get booking confirmation immediately
+            </p>
           </div>
         </div>
       </div>
@@ -195,10 +232,9 @@ const HotelBookingForm = () => {
 
 export default HotelBookingForm;
 
-
-// import { 
-//   MapPin, 
-//   Calendar, 
+// import {
+//   MapPin,
+//   Calendar,
 //   Users,
 //   Star,
 //   X,
@@ -229,7 +265,6 @@ export default HotelBookingForm;
 //     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 //     return diffDays;
 //   };
-
 
 //   const updateGuestDetail = (index, field, value) => {
 //     const updated = [...guestDetails];
@@ -298,7 +333,7 @@ export default HotelBookingForm;
 //             </div>
 
 //             {/* Guests & Rooms */}
-//             <div 
+//             <div
 //               className="flex-1 min-w-[240px] p-6 border-b border-gray-200 hover:bg-blue-50/30 transition-colors cursor-pointer"
 //               onClick={() => setShowGuestModal(true)}
 //             >

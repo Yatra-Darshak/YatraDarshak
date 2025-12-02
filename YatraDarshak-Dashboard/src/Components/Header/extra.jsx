@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Plane, Building, Palmtree, Train, Bus, Car, Shield, MessageCircle } from 'lucide-react';
 
-const Header = () => {
+const Extra = () => {
   const [activeTab, setActiveTab] = useState('One Way');
   const [chatVisible, setChatVisible] = useState(false);
 
@@ -268,4 +268,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Extra;

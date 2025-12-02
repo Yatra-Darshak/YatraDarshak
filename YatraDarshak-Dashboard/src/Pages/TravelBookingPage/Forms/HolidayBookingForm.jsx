@@ -11,6 +11,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const HolidayBookingForm = () => {
   const [destination, setDestination] = useState("Goa");
@@ -26,11 +27,39 @@ const HolidayBookingForm = () => {
 
   // Popular destinations
   const destinations = [
-  "Andaman & Nicobar Islands", "Arunachal Pradesh", "Delhi", "Goa", "Gujarat", "Himachal Pradesh", "Jammu and Kashmir", "Karnataka", "Kerala", "Ladakh", "Maharashtra", "Meghalaya", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Lakshadweep", "Pondicherry"
+    "Andaman & Nicobar Islands",
+    "Arunachal Pradesh",
+    "Delhi",
+    "Goa",
+    "Gujarat",
+    "Himachal Pradesh",
+    "Jammu and Kashmir",
+    "Karnataka",
+    "Kerala",
+    "Ladakh",
+    "Maharashtra",
+    "Meghalaya",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Uttarakhand",
+    "Uttar Pradesh",
+    "West Bengal",
+    "Lakshadweep",
+    "Pondicherry",
   ];
 
   const getDayOfWeek = (dateString) => {
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
     const date = new Date(dateString);
     return days[date.getDay()];
   };
@@ -66,7 +95,9 @@ const HolidayBookingForm = () => {
                   className="w-full text-lg font-bold text-gray-800 border-none outline-none bg-transparent cursor-pointer"
                 >
                   {destinations.map((dest) => (
-                    <option key={dest} value={dest}>{dest}</option>
+                    <option key={dest} value={dest}>
+                      {dest}
+                    </option>
                   ))}
                 </select>
                 <div className="text-sm text-gray-500">India</div>
@@ -88,7 +119,9 @@ const HolidayBookingForm = () => {
                   onChange={(e) => setCheckInDate(e.target.value)}
                   className="w-full text-xl font-bold text-gray-800 border-none outline-none bg-transparent cursor-pointer"
                 />
-                <div className="text-sm text-gray-500">{getDayOfWeek(checkInDate)}</div>
+                <div className="text-sm text-gray-500">
+                  {getDayOfWeek(checkInDate)}
+                </div>
               </div>
             </div>
           </div>
@@ -107,7 +140,9 @@ const HolidayBookingForm = () => {
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="text-2xl font-bold text-gray-800 w-12 text-center">{nights}</span>
+                <span className="text-2xl font-bold text-gray-800 w-12 text-center">
+                  {nights}
+                </span>
                 <button
                   onClick={() => setNights(nights + 1)}
                   className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-purple-500 flex items-center justify-center transition-colors"
@@ -133,7 +168,8 @@ const HolidayBookingForm = () => {
               <Users className="w-6 h-6 text-purple-500" />
               <div className="flex-1">
                 <div className="text-xl font-bold text-gray-800">
-                  {travelers.adults + travelers.children} Traveler{travelers.adults + travelers.children > 1 ? "s" : ""}
+                  {travelers.adults + travelers.children} Traveler
+                  {travelers.adults + travelers.children > 1 ? "s" : ""}
                 </div>
                 <div className="text-sm text-gray-500">
                   {travelers.rooms} Room{travelers.rooms > 1 ? "s" : ""}
@@ -143,43 +179,80 @@ const HolidayBookingForm = () => {
           </div>
         </div>
 
-        <button className="w-full py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-lg font-bold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg">
-          SEARCH PACKAGES
-        </button>
-      </div>  
+        <Link to="/holiday-booking-page">
+          <button className="w-full py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-lg font-bold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg">
+            SEARCH PACKAGES
+          </button>
+        </Link>
+      </div>
 
       {/* Traveler Selection Modal */}
       {showTravelerModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-gray-800">Select Travelers</h3>
-              <button onClick={() => setShowTravelerModal(false)} className="text-gray-400 hover:text-gray-600">
+              <h3 className="text-2xl font-bold text-gray-800">
+                Select Travelers
+              </h3>
+              <button
+                onClick={() => setShowTravelerModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
             <div className="space-y-4">
               {[
-                { label: "Adults", key: "adults", subtitle: "12+ years", min: 1 },
-                { label: "Children", key: "children", subtitle: "2-12 years", min: 0 },
-                { label: "Rooms", key: "rooms", subtitle: "Select rooms", min: 1 }
+                {
+                  label: "Adults",
+                  key: "adults",
+                  subtitle: "12+ years",
+                  min: 1,
+                },
+                {
+                  label: "Children",
+                  key: "children",
+                  subtitle: "2-12 years",
+                  min: 0,
+                },
+                {
+                  label: "Rooms",
+                  key: "rooms",
+                  subtitle: "Select rooms",
+                  min: 1,
+                },
               ].map(({ label, key, subtitle, min }) => (
-                <div key={key} className="flex items-center justify-between py-3 border-b border-gray-200">
+                <div
+                  key={key}
+                  className="flex items-center justify-between py-3 border-b border-gray-200"
+                >
                   <div>
                     <div className="font-semibold text-gray-800">{label}</div>
                     <div className="text-sm text-gray-500">{subtitle}</div>
                   </div>
                   <div className="flex items-center gap-3">
                     <button
-                      onClick={() => setTravelers({ ...travelers, [key]: Math.max(min, travelers[key] - 1) })}
+                      onClick={() =>
+                        setTravelers({
+                          ...travelers,
+                          [key]: Math.max(min, travelers[key] - 1),
+                        })
+                      }
                       className="w-10 h-10 rounded-full border-2 border-gray-300 hover:border-purple-500 flex items-center justify-center transition-colors"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    <span className="text-xl font-bold text-gray-800 w-8 text-center">{travelers[key]}</span>
+                    <span className="text-xl font-bold text-gray-800 w-8 text-center">
+                      {travelers[key]}
+                    </span>
                     <button
-                      onClick={() => setTravelers({ ...travelers, [key]: travelers[key] + 1 })}
+                      onClick={() =>
+                        setTravelers({
+                          ...travelers,
+                          [key]: travelers[key] + 1,
+                        })
+                      }
                       className="w-10 h-10 rounded-full border-2 border-gray-300 hover:border-purple-500 flex items-center justify-center transition-colors"
                     >
                       <Plus className="w-4 h-4" />
@@ -201,17 +274,38 @@ const HolidayBookingForm = () => {
 
       {/* Why Book With Us */}
       <div className="mt-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Why Book With Us?</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Why Book With Us?
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {[
-            { icon: Shield, title: "Secure Booking", desc: "100% safe payment" },
-            { icon: Star, title: "Best Price", desc: "Lowest prices guaranteed" },
-            { icon: Users, title: "24/7 Support", desc: "Round the clock help" },
-            { icon: CheckCircle, title: "Verified Hotels", desc: "Trusted properties" }
+            {
+              icon: Shield,
+              title: "Secure Booking",
+              desc: "100% safe payment",
+            },
+            {
+              icon: Star,
+              title: "Best Price",
+              desc: "Lowest prices guaranteed",
+            },
+            {
+              icon: Users,
+              title: "24/7 Support",
+              desc: "Round the clock help",
+            },
+            {
+              icon: CheckCircle,
+              title: "Verified Hotels",
+              desc: "Trusted properties",
+            },
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <div key={i} className="bg-white rounded-xl p-5 shadow-lg text-center border-2 border-gray-100 hover:border-purple-300 transition-all duration-300">
+              <div
+                key={i}
+                className="bg-white rounded-xl p-5 shadow-lg text-center border-2 border-gray-100 hover:border-purple-300 transition-all duration-300"
+              >
                 <div className="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
                   <Icon className="w-7 h-7 text-purple-600" />
                 </div>

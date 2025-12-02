@@ -8,24 +8,25 @@ import {
   Navigation,
 } from "lucide-react";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 // 🔹 State → City Mapping
 const locations = {
-  "Delhi": ["Delhi"],
+  Delhi: ["Delhi"],
   "Himachal Pradesh": ["Manali", "Shimla", "Kullu", "Dharamshala"],
-  "Rajasthan": ["Jaipur", "Udaipur", "Jodhpur"],
-  "Uttarakhand": ["Rishikesh", "Nainital", "Mussoorie"],
-  "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
-  "Karnataka": ["Bangalore", "Mysore", "Hampi"],
-  "Kerala": ["Kochi", "Munnar", "Alleppey"],
+  Rajasthan: ["Jaipur", "Udaipur", "Jodhpur"],
+  Uttarakhand: ["Rishikesh", "Nainital", "Mussoorie"],
+  Maharashtra: ["Mumbai", "Pune", "Nagpur"],
+  Karnataka: ["Bangalore", "Mysore", "Hampi"],
+  Kerala: ["Kochi", "Munnar", "Alleppey"],
   "Tamil Nadu": ["Chennai", "Ooty", "Kodaikanal"],
-  "Goa": ["North Goa", "South Goa"],
+  Goa: ["North Goa", "South Goa"],
   "Jammu and Kashmir": ["Srinagar", "Gulmarg", "Pahalgam"],
-  "Sikkim": ["Gangtok", "Lachung", "Pelling"],
-  "Meghalaya": ["Shillong", "Cherrapunji", "Dawki"],
-  "Gujarat": ["Kutch", "Ahmedabad", "Dwarka"],
+  Sikkim: ["Gangtok", "Lachung", "Pelling"],
+  Meghalaya: ["Shillong", "Cherrapunji", "Dawki"],
+  Gujarat: ["Kutch", "Ahmedabad", "Dwarka"],
   "West Bengal": ["Darjeeling", "Kolkata"],
-  "Punjab": ["Amritsar", "Chandigarh"],
+  Punjab: ["Amritsar", "Chandigarh"],
   "Uttar Pradesh": ["Agra", "Varanasi", "Lucknow"],
 };
 
@@ -239,12 +240,13 @@ const CabBookingForm = () => {
             </div>
           </div>
         </div>
-      {/* Search Button */}
-      <button className="w-full py-5 mt-4 rounded-b-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
-        SEARCH CABS
-      </button>
+        {/* Search Button */}
+        <Link to='/cab-booking-page'>
+          <button className="w-full py-5 mt-4 rounded-b-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+            SEARCH CABS
+          </button>
+        </Link>
       </div>
-
 
       {/* Important Info */}
       <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-4">
@@ -265,4 +267,3 @@ const CabBookingForm = () => {
 };
 
 export default CabBookingForm;
-

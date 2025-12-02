@@ -1,28 +1,20 @@
 import React from "react";
 import { Home } from "lucide-react";
 
-const YDLogo = ({ size = 40 }) => (
-  <div className="relative flex items-center justify-center">
-    <div
-      className="relative flex items-center justify-center bg-gradient-to-br from-teal-700 to-teal-800 rounded-xl shadow-xl"
-      style={{ width: size, height: size }}
-    >
-      <div className="text-white font-black text-lg leading-none transform -rotate-3">
-        <span className="text-white">Y</span>
-        <span className="text-teal-200">D</span>
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-br from-teal-600 to-teal-700 rounded-xl blur opacity-50 animate-pulse" />
-    </div>
-  </div>
-);
-
 const Navbar = () => {
   return (
     <nav className="relative z-50 bg-white/30 backdrop-blur-3xl border-b border-white/20 shadow-sm">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* YD Logo */}
-          <YDLogo size={50} />
+          <div className="relative group">
+            <img
+              className="w-12 h-12 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105"
+              src="./YD-Partner.png"
+              alt="YatraDarshak Partner Logo"
+            />
+            <div className="absolute -inset-1 bg-gradient-to-br from-teal-400 to-blue-600 rounded-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur"></div>
+          </div>
 
           {/* Back button */}
           <button
